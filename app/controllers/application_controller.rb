@@ -1,13 +1,13 @@
-require 'csv'
-require 'linear-regression'
 #@csv_response = `curl -F "file=@/home/elsyser/file.csv" https://row-sum.herokuapp.com/`
-class SumController < ApplicationController  
+class SumController < ApplicationController
+	require 'csv'
+	require 'linear-regression'
 	protect_from_forgery with: :null_sessions
 	#skip_before_action :verify_authenticity_token
 	
 	def sums
 	
-		arr = CSV.parse(params["test-file"].read, converters: :numeric)
+		arr = CSV.parse(params["file"].read, converters: :numeric)
 		sum = 0
 		arr.each do |row|
 			sum += row[0]
@@ -17,7 +17,7 @@ class SumController < ApplicationController
 	
 	def filters
 	
-		arr = CSV.parse(params["test-file"].read, converters: :numeric)
+		arr = CSV.parse(params["file"].read, converters: :numeric)
 		sum = 0
 		arr.each do |row|
 			if row[2] % 2 != 0
@@ -28,7 +28,7 @@ class SumController < ApplicationController
 	end
 
 	def intervals
-		arr = CSV.parse(params["test-file"].read, converters: :numeric)
+		arr = CSV.parse(params["file"].read, converters: :numeric)
 		i = 0
 		maxSum = 0
 		while i <= len do
@@ -52,7 +52,7 @@ class SumController < ApplicationController
 	end
 	
 	def lin_regressions
-		arr = CSV.parse(params["test-file"].read, converters: :numeric)
+		arr = CSV.parse(params["file"].read, converters: :numeric)
 		x = (1..arr.length).to_a
 		y = arr.map {|row| row[0]}
 		linear = Regression::Linear.new(x, y)
