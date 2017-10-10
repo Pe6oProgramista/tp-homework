@@ -5,7 +5,7 @@ class SumController < ApplicationController
 	protect_from_forgery with: :null_sessions
 	#skip_before_action :verify_authenticity_token
 	
-	def sums_first_row
+	def sums
 	
 		arr = CSV.parse(params["test-file"].read, converters: :numeric)
 		sum = 0
@@ -15,7 +15,7 @@ class SumController < ApplicationController
 		render plain: "%.2f" % (sum).ceil	
 	end
 	
-	def filter_sums
+	def filters
 	
 		arr = CSV.parse(params["test-file"].read, converters: :numeric)
 		sum = 0
@@ -27,7 +27,7 @@ class SumController < ApplicationController
 		render plain: "%.2f" % (sum).ceil
 	end
 
-	def great_sum
+	def intervals
 		arr = CSV.parse(params["test-file"].read, converters: :numeric)
 		i = 0
 		maxSum = 0
@@ -51,7 +51,7 @@ class SumController < ApplicationController
 		render plain: "%.2f" % (maxSum).ceil
 	end
 	
-	def lin_regression
+	def lin_regressions
 		arr = CSV.parse(params["test-file"].read, converters: :numeric)
 		x = (1..arr.length).to_a
 		y = arr.map {|row| row[0]}
