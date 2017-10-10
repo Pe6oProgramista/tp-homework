@@ -1,7 +1,8 @@
 #@csv_response = `curl -F "file=@/home/elsyser/file.csv" https://row-sum.herokuapp.com/`
-class SumController < ApplicationController
-	require 'csv'
-	require 'linear-regression'
+
+require 'csv'
+require 'linear-regression'
+class ApplicationController < ActionController::Base
 	protect_from_forgery with: :null_sessions
 	#skip_before_action :verify_authenticity_token
 	
@@ -30,6 +31,7 @@ class SumController < ApplicationController
 	def intervals
 		arr = CSV.parse(params["file"].read, converters: :numeric)
 		i = 0
+		len = CSV.readlines(params["file"].path).size
 		maxSum = 0
 		while i <= len do
 			j = 0
