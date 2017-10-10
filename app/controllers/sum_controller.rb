@@ -5,7 +5,7 @@ class SumController < ApplicationController
 	
 	def index
 		#@csv_response = `curl -F "file=@/home/elsyser/file.csv" https://row-sum.herokuapp.com/`
-		arr = CSV.parse(params["sum"].read)
+		arr = CSV.parse(params["sum"].read, converters: :numeric)
 		sum = 0;
 		arr.each do |row|
 			sum += row[0]
